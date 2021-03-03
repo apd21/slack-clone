@@ -7,15 +7,24 @@ import Header from './components/Header';
 import styled from 'styled-components';
 import Sidebar from './components/Sidebar';
 import db from './firebase';
+import { auth, provider } from './firebase';
 
 const App = () => {
   const [rooms, setRooms] = useState([]);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 
   const getChannels = () => {
     db.collection('rooms').onSnapshot((snapshot) => {
       setRooms(snapshot.docs.map((doc) => {
         return { id: doc.id, name: doc.data().name }
       }))
+    })
+  }
+
+  const signOut = () => {
+    auth.signOut().then(() => {
+      localStorage.removeItem('user');
+      setUser(null);
     })
   }
 
@@ -26,8 +35,12 @@ const App = () => {
   return (
     <div className="App">
       <Router>
+        {
+          !user ? 
+          <Login setUser={setUser} /> 
+          : 
         <Container>
-          <Header />
+          <Header signOut={signOut} user={user} />
           <Main>
             <Sidebar rooms={rooms} />
             <Switch>
@@ -35,11 +48,12 @@ const App = () => {
                 <Chat />
               </Route>
               <Route path="/">
-                <Login />
+           
               </Route>
             </Switch>
           </Main>
         </Container>
+              }
       </Router>
     </div>
   );
