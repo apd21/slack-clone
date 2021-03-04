@@ -1,11 +1,20 @@
 import React from 'react'
+import { useHistory} from 'react-router-dom';
 import styled from 'styled-components';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { sidebarItemsData } from '../data/SidebarData';
 import AddIcon from '@material-ui/icons/Add';
 import db from '../firebase';
 
 const Sidebar = (props) => {
+
+    const history = useHistory();
+
+    const goToChannel = (id) => {
+        if(id) {
+            history.push(`/room/${id}`)
+        }
+    }
 
     const addChannel = () => {
         const promptName = prompt("Enter channel name");
@@ -21,7 +30,7 @@ const Sidebar = (props) => {
             <WorkspaceContainer>
                 <Name>CleverProgrammer</Name>
                 <NewMessage>
-                    <AddCircleIcon/>
+                    <AddCircleOutlineIcon/>
                 </NewMessage>
 
             </WorkspaceContainer>
@@ -43,7 +52,8 @@ const Sidebar = (props) => {
                 </NewChannelContainer>
                 <ChannelsList>
                     { props.rooms.map(item => (
-                        <Channel>
+                        <Channel onClick={() => goToChannel(item.id)}
+                        >
                             #{item.name}
                         </Channel>
                     ))}

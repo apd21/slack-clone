@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components';
 import { auth, provider } from '../firebase';
 
-const Login = () => {
+const Login = (props) => {
 
-    const signIn = (props) => {
+    const signIn = () => {
         auth.signInWithPopup(provider)
         .then((result) => {
             const newUser = {

@@ -19,7 +19,7 @@ const Header = ({ user, signOut}) => {
                 <Name>
                     {user.name}
                 </Name>
-                <UserImage onClick={SignOut}>
+                <UserImage onClick={signOut}>
                     <img src={user.photo ? user.photo : "https://i.imgur.com/6VBx3io.png"} />
                 </UserImage>
             </UserContainer>

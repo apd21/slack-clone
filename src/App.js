@@ -44,16 +44,16 @@ const App = () => {
           <Main>
             <Sidebar rooms={rooms} />
             <Switch>
-              <Route path="/room">
-                <Chat />
+              <Route path="/room/:channelId">
+                <Chat user={user} />
               </Route>
               <Route path="/">
-           
+                Select or Create Channel
               </Route>
             </Switch>
           </Main>
         </Container>
-              }
+        }
       </Router>
     </div>
   );
@@ -66,7 +66,7 @@ const Container = styled.div`
   width: 100%;
   height: 100vh;
   display: grid;
-  grid-template-rows: 38px auto;
+  grid-template-rows: 38px minmax(0, 1fr);
   
 
 `;
